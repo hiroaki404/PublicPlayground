@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "PublicPlayground"
 include(":app")
+include(":feature:animation")
