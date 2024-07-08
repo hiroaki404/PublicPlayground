@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.feature.animation"
+    namespace = "com.example.turbine"
     compileSdk = 34
 
     defaultConfig {
@@ -30,23 +30,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.ui.tooling.preview)
     testImplementation(libs.junit)
-
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
+    testImplementation(libs.turbin)
+    testImplementation(libs.androidx.test.truth)
+    testImplementation(libs.coroutines.test)
 }
