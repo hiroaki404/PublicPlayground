@@ -12,6 +12,7 @@ appcompat = "1.6.1"
 material = "1.11.0"
 turbin = "1.1.0"
 androidx-test-truth = "1.6.0"
+coroutines-test = "1.8.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +33,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 turbin = { module = "app.cash.turbine:turbine", version.ref = "turbin" }
 androidx-test-truth = { module = "androidx.test.ext:truth", version.ref = "androidx-test-truth" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines-test" }
 
 # for build-logic
 androidGradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
