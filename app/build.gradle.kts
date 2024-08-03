@@ -6,6 +6,7 @@ android.namespace = "com.example.publicplayground"
 
 dependencies {
     implementation(projects.feature.animation)
+    implementation(projects.feature.composeBasic)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
