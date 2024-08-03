@@ -21,3 +21,4 @@ rootProject.name = "PublicPlayground"
 include(":app")
 include(":feature:animation")
 include(":test:turbine")
+include(":feature:compose_basic")
