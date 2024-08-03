@@ -5,9 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.publicplayground.feature.compose_basic.RecompositionCheck
 import com.example.publicplayground.ui.theme.PublicPlaygroundTheme
 
 class MainActivity : ComponentActivity() {
@@ -64,22 +62,7 @@ fun PublicPlaygroundApp() {
             )
         }
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .background(Color.Cyan),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                modifier = Modifier,
-                text = "top"
-            )
-            Text(
-                modifier = Modifier,
-                text = "bottom"
-            )
-        }
+        RecompositionCheck(modifier = Modifier.padding(innerPadding))
     }
 }
 
