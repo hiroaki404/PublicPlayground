@@ -1,8 +1,12 @@
+
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.JavaVersion
+import org.gradle.api.artifacts.VersionCatalog
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.getByType
 
 @Suppress("unused")
 class PublicPlaygroundApplicationPlugin : Plugin<Project> {
@@ -13,13 +17,16 @@ class PublicPlaygroundApplicationPlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.android")
             }
 
+            val libs: VersionCatalog =
+                extensions.getByType<VersionCatalogsExtension>().named("libs")
+
             androidApplication {
-                compileSdk = 34
+                compileSdk = libs.findVersion("compileSdk").get().toString().toInt()
 
                 defaultConfig {
                     applicationId = "com.example.publicplayground"
-                    minSdk = 28
-                    targetSdk = 34
+                    minSdk = libs.findVersion("minSdk").get().toString().toInt()
+                    targetSdk = libs.findVersion("targetSdk").get().toString().toInt()
                     versionCode = 1
                     versionName = "1.0"
 
