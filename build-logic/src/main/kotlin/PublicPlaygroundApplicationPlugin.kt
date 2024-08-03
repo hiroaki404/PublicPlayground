@@ -15,6 +15,7 @@ class PublicPlaygroundApplicationPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
+                apply("org.jetbrains.kotlin.plugin.compose")
             }
 
             val libs: VersionCatalog =
@@ -52,9 +53,6 @@ class PublicPlaygroundApplicationPlugin : Plugin<Project> {
                 }
                 buildFeatures {
                     compose = true
-                }
-                composeOptions {
-                    kotlinCompilerExtensionVersion = "1.5.1"
                 }
             }
         }
