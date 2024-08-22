@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.publicplayground.feature.compose_basic.RecompositionCheck
+import com.example.publicplayground.feature.compose_basic.SaveableCheck
 import com.example.publicplayground.ui.theme.PublicPlaygroundTheme
 
 class MainActivity : ComponentActivity() {
@@ -62,7 +62,7 @@ fun PublicPlaygroundApp() {
             )
         }
     ) { innerPadding ->
-        RecompositionCheck(modifier = Modifier.padding(innerPadding))
+        SaveableCheck(modifier = Modifier.padding(innerPadding))
     }
 }
 
