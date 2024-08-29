@@ -33,4 +33,16 @@ gradlePlugin {
             implementationClass = "PublicPlaygroundApplicationPlugin"
         }
     }
+    plugins {
+        register("KotlinAndroidPlugin") {
+            id = "publicplayground.android.kotlin"
+            implementationClass = "AndroidKotlinPlugin"
+        }
+    }
+    plugins {
+        register("PublicPlaygroundAndroidPlugin") {
+            id = "publicplayground.android.compose"
+            implementationClass = "AndroidComposePlugin"
+        }
+    }
 }
