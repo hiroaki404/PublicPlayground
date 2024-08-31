@@ -11,6 +11,10 @@ fun Project.android(action: BaseAppModuleExtension.() -> Unit) {
     extensions.configure(action)
 }
 
+fun Project.androidCommon(action: com.android.build.gradle.TestedExtension.() -> Unit) {
+    extensions.configure(action)
+}
+
 fun Project.setupAndroid() {
     android {
         val libs: VersionCatalog =

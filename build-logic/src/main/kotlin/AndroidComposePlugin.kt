@@ -1,3 +1,4 @@
+
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -8,10 +9,8 @@ class AndroidComposePlugin: Plugin<Project> {
                 apply("org.jetbrains.kotlin.plugin.compose")
             }
 
-            android {
-                buildFeatures {
-                    compose = true
-                }
+            androidCommon {
+                buildFeatures.compose = true
             }
         }
     }
