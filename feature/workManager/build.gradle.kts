@@ -3,20 +3,9 @@ plugins {
     id("publicplayground.android.kotlin")
 }
 
-android {
-    namespace = "com.example.kotest"
-
-    @Suppress("UnstableApiUsage")
-    testOptions {
-        unitTests.all {
-            it.useJUnitPlatform()
-        }
-    }
-}
+android.namespace = "com.example.publicplayground.feature.workmanager"
 
 dependencies {
-    testImplementation(libs.kotest.runner)
-    testImplementation(libs.kotest.assertions.core)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

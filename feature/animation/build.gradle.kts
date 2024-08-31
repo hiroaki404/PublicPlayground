@@ -1,43 +1,10 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.composeCompiler)
+    id("publicplayground.android.library")
+    id("publicplayground.android.compose")
+    id("publicplayground.android.kotlin")
 }
 
-android {
-    namespace = "com.example.feature.animation"
-    compileSdk = libs.versions.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeCompiler {
-        enableStrongSkippingMode = true
-    }
-}
+android.namespace = "com.example.feature.animation"
 
 dependencies {
     implementation(libs.androidx.core.ktx)
