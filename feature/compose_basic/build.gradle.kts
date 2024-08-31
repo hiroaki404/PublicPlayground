@@ -4,12 +4,7 @@ plugins {
     id("publicplayground.android.compose")
 }
 
-android {
-    namespace = "com.example.publicplayground.feature.compose_basic"
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
+android.namespace = "com.example.publicplayground.feature.compose_basic"
 
 dependencies {
     implementation(libs.androidx.core.ktx)

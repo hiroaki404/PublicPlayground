@@ -3,12 +3,7 @@ plugins {
     id("publicplayground.android.kotlin")
 }
 
-android {
-    namespace = "com.example.turbine"
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
+android.namespace = "com.example.turbine"
 
 dependencies {
     testImplementation(libs.junit)

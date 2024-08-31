@@ -4,13 +4,7 @@ plugins {
     id("publicplayground.android.kotlin")
 }
 
-android {
-    namespace = "com.example.feature.animation"
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
+android.namespace = "com.example.feature.animation"
 
 dependencies {
     implementation(libs.androidx.core.ktx)

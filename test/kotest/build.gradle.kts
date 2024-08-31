@@ -5,9 +5,6 @@ plugins {
 
 android {
     namespace = "com.example.kotest"
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 
     @Suppress("UnstableApiUsage")
     testOptions {

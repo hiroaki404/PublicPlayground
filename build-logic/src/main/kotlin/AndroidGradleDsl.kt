@@ -1,4 +1,3 @@
-
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.JavaVersion
@@ -7,6 +6,7 @@ import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
 internal fun Project.androidApplication(action: BaseAppModuleExtension.() -> Unit) {
     extensions.configure(action)
@@ -17,6 +17,10 @@ internal fun Project.androidLibrary(action: LibraryExtension.() -> Unit) {
 }
 
 internal fun Project.androidCommon(action: com.android.build.gradle.TestedExtension.() -> Unit) {
+    extensions.configure(action)
+}
+
+internal fun Project.kotlin(action: KotlinAndroidProjectExtension.() -> Unit) {
     extensions.configure(action)
 }
 
@@ -53,9 +57,6 @@ internal fun Project.setupAndroid() {
                     "proguard-rules.pro"
                 )
             }
-        }
-        buildFeatures {
-            compose = true
         }
     }
 }
