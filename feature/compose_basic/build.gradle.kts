@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.composeCompiler)
+    id("publicplayground.android.library")
+    id("publicplayground.android.kotlin")
+    id("publicplayground.android.compose")
 }
 
 android {
