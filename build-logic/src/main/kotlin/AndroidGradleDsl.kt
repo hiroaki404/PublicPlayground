@@ -1,4 +1,5 @@
 
+import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -7,7 +8,11 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
 
-internal fun Project.android(action: BaseAppModuleExtension.() -> Unit) {
+internal fun Project.androidApplication(action: BaseAppModuleExtension.() -> Unit) {
+    extensions.configure(action)
+}
+
+internal fun Project.androidLibrary(action: LibraryExtension.() -> Unit) {
     extensions.configure(action)
 }
 
@@ -16,7 +21,7 @@ internal fun Project.androidCommon(action: com.android.build.gradle.TestedExtens
 }
 
 internal fun Project.setupAndroid() {
-    android {
+    androidApplication {
         val libs: VersionCatalog =
             extensions.getByType<VersionCatalogsExtension>().named("libs")
 
