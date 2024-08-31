@@ -7,15 +7,15 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
 
-fun Project.android(action: BaseAppModuleExtension.() -> Unit) {
+internal fun Project.android(action: BaseAppModuleExtension.() -> Unit) {
     extensions.configure(action)
 }
 
-fun Project.androidCommon(action: com.android.build.gradle.TestedExtension.() -> Unit) {
+internal fun Project.androidCommon(action: com.android.build.gradle.TestedExtension.() -> Unit) {
     extensions.configure(action)
 }
 
-fun Project.setupAndroid() {
+internal fun Project.setupAndroid() {
     android {
         val libs: VersionCatalog =
             extensions.getByType<VersionCatalogsExtension>().named("libs")
