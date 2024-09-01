@@ -1,4 +1,6 @@
+import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
+import com.android.build.gradle.TestedExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -16,7 +18,7 @@ internal fun Project.androidLibrary(action: LibraryExtension.() -> Unit) {
     extensions.configure(action)
 }
 
-internal fun Project.androidCommon(action: com.android.build.gradle.TestedExtension.() -> Unit) {
+internal fun Project.androidCommon(action: TestedExtension.() -> Unit) {
     extensions.configure(action)
 }
 
@@ -25,39 +27,21 @@ internal fun Project.kotlin(action: KotlinAndroidProjectExtension.() -> Unit) {
 }
 
 internal fun Project.setupAndroid() {
-    androidApplication {
+    extensions.getByType(CommonExtension::class.java).apply {
         val libs: VersionCatalog =
             extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-        compileSdk = libs.findVersion("compileSdk").get().toString().toInt()
 
         defaultConfig {
-            applicationId = "com.example.publicplayground"
             minSdk = libs.findVersion("minSdk").get().toString().toInt()
-            targetSdk = libs.findVersion("targetSdk").get().toString().toInt()
-            versionCode = 1
-            versionName = "1.0"
+            compileSdk = libs.findVersion("compileSdk").get().toString().toInt()
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-            vectorDrawables {
-                useSupportLibrary = true
-            }
         }
 
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
         }
-
-        buildTypes {
-            release {
-                isMinifyEnabled = false
-                proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
-                )
-            }
-        }
     }
 }
-

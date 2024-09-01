@@ -1,9 +1,5 @@
-import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalog
-import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.getByType
 
 @Suppress("unused")
 class PublicPlaygroundLibraryPlugin : Plugin<Project> {
@@ -14,15 +10,9 @@ class PublicPlaygroundLibraryPlugin : Plugin<Project> {
             }
 
             androidLibrary {
-                val libs: VersionCatalog =
-                    extensions.getByType<VersionCatalogsExtension>().named("libs")
-
-                compileSdk = libs.findVersion("compileSdk").get().toString().toInt()
+                setupAndroid()
 
                 defaultConfig {
-                    minSdk = libs.findVersion("minSdk").get().toString().toInt()
-
-                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                     consumerProguardFiles("consumer-rules.pro")
                 }
 
@@ -34,10 +24,6 @@ class PublicPlaygroundLibraryPlugin : Plugin<Project> {
                             "proguard-rules.pro"
                         )
                     }
-                }
-                compileOptions {
-                    sourceCompatibility = JavaVersion.VERSION_17
-                    targetCompatibility = JavaVersion.VERSION_17
                 }
             }
         }
