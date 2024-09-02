@@ -7,9 +7,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 class AndroidKotlinPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            with(pluginManager) {
-                apply("org.jetbrains.kotlin.android")
-            }
+            pluginManager.apply("org.jetbrains.kotlin.android")
 
             androidCommon {
                 kotlin {

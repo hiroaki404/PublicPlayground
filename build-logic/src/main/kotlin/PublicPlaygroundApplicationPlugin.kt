@@ -1,8 +1,5 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalog
-import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.gradle.kotlin.dsl.getByType
 
 @Suppress("unused")
 class PublicPlaygroundApplicationPlugin : Plugin<Project> {
@@ -14,9 +11,6 @@ class PublicPlaygroundApplicationPlugin : Plugin<Project> {
 
             androidApplication {
                 setupAndroid()
-                val libs: VersionCatalog =
-                    extensions.getByType<VersionCatalogsExtension>().named("libs")
-
 
                 defaultConfig {
                     applicationId = "com.example.publicplayground"
