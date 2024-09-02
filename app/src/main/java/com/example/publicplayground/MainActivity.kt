@@ -21,13 +21,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.publicplayground.feature.compose_basic.SaveableCheck
+import com.example.publicplayground.feature.workmanager.SimpleCoroutineWorker
 import com.example.publicplayground.ui.theme.PublicPlaygroundTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        WorkManager.getInstance(this)
+            .enqueue(
+                OneTimeWorkRequestBuilder<SimpleCoroutineWorker>()
+                    .build()
+            )
 
         setContent {
             PublicPlaygroundTheme {

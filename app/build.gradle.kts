@@ -9,6 +9,7 @@ android.namespace = "com.example.publicplayground"
 dependencies {
     implementation(projects.feature.animation)
     implementation(projects.feature.composeBasic)
+    implementation(projects.feature.workManager)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -25,4 +26,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // workManager
+    implementation(libs.workManager)
 }
