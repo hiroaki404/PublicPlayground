@@ -1,7 +1,7 @@
 plugins {
-    id("publicplayground.android.application")
-    id("publicplayground.android.compose")
-    id("publicplayground.android.kotlin")
+    alias(libs.plugins.publicplayground.android.application)
+    alias(libs.plugins.publicplayground.android.compose)
+    alias(libs.plugins.publicplayground.android.kotlin)
 }
 
 android.namespace = "com.example.publicplayground"

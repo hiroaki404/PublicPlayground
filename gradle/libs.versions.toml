@@ -52,5 +52,10 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
+publicplayground-android-application = { id = "publicplayground.android.application", version = "unspecified" }
+publicplayground-android-library = { id = "publicplayground.android.library", version = "unspecified" }
+publicplayground-android-kotlin = { id = "publicplayground.android.kotlin", version = "unspecified" }
+publicplayground-android-compose = { id = "publicplayground.android.compose", version = "unspecified" }
+
 [bundles]
 plugins = ["androidGradlePlugin", "kotlinGradlePlugin"]
