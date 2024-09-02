@@ -45,3 +45,6 @@ internal fun Project.setupAndroid() {
         }
     }
 }
+
+internal val Project.libs: VersionCatalog
+    get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
