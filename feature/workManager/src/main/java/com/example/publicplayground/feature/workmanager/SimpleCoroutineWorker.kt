@@ -13,6 +13,7 @@ class SimpleCoroutineWorker(
     override suspend fun doWork(): Result {
         delay(1000)
         Log.d("SimpleCoroutineWorker", "Hello, World!")
+        println("Hello, World!")
         return Result.success()
     }
 }

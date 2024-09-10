@@ -20,4 +20,7 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.workManager.test)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.junit.ktx)
+    testImplementation(libs.coroutines.test)
 }
