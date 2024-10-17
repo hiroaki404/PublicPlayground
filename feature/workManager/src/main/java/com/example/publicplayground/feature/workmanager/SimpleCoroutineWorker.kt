@@ -11,9 +11,10 @@ class SimpleCoroutineWorker(
     workerParams: WorkerParameters
 ) : CoroutineWorker(appContext, workerParams) {
     override suspend fun doWork(): Result {
+        println("Hello, World before!")
         delay(1000)
         Log.d("SimpleCoroutineWorker", "Hello, World!")
-        println("Hello, World!")
+        println("Hello, World after!")
         return Result.success()
     }
 }

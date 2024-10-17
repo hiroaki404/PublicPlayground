@@ -8,8 +8,15 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.testing.SynchronousExecutor
 import androidx.work.testing.WorkManagerTestInitHelper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.asExecutor
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -18,6 +25,18 @@ import org.robolectric.annotation.Config
 @RunWith(AndroidJUnit4::class)
 @Config(manifest = Config.NONE)
 class ExampleUnitTest {
+    private val testDispatcher = StandardTestDispatcher()
+
+    @Before
+    fun setup() {
+        Dispatchers.setMain(testDispatcher)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
+
     @Test
     fun simpleWorkerTest() = runTest {
         // Context of the app under test.
@@ -26,6 +45,7 @@ class ExampleUnitTest {
         val config = Configuration.Builder()
             .setMinimumLoggingLevel(Log.DEBUG)
             .setExecutor(SynchronousExecutor())
+            .setTaskExecutor(testDispatcher.asExecutor())
             .build()
 
         // Initialize WorkManager for instrumentation tests.
@@ -34,8 +54,10 @@ class ExampleUnitTest {
         val request = OneTimeWorkRequestBuilder<SimpleCoroutineWorker>()
             .build()
         val workManager = WorkManager.getInstance(appContext)
+        val operation = workManager.enqueue(request)
+        // advance time after enqueuing the work
         testScheduler.advanceTimeBy(2000)
-        val result = workManager.enqueue(request).result.get()
+        val result = operation.result.get()
         println("result: $result")
     }
 }
