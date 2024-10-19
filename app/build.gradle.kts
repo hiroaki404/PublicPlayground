@@ -29,4 +29,7 @@ dependencies {
 
     // workManager
     implementation(libs.workManager)
+
+    implementation(libs.coil3)
+    implementation(libs.okio)
 }

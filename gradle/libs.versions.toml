@@ -24,6 +24,8 @@ dagger-hilt = "2.52"
 androidx-hilt = "1.2.0"
 robolectric = "4.13"
 androidx-test-junit = "1.2.1"
+coil3 = "3.0.0-rc01"
+okio = "3.9.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -57,6 +59,9 @@ androidx-hilt-worker = { module = "androidx.hilt:hilt-work", version.ref = "andr
 dagger-hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "dagger-hilt" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 androidx-test-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx-test-junit" }
+coil3 = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
+coil3Network = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil3" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 
 # for build-logic
 androidGradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
