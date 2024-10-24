@@ -23,7 +23,6 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.publicplayground.feature.compose_basic.SaveableCheck
 import com.example.publicplayground.feature.workmanager.SimpleCoroutineWorker
 import com.example.publicplayground.ui.theme.PublicPlaygroundTheme
 
@@ -65,13 +64,13 @@ fun PublicPlaygroundApp() {
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Public Playground @hiroaki404")
+                    Text("Playground")
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
             )
         }
     ) { innerPadding ->
-        SaveableCheck(modifier = Modifier.padding(innerPadding))
+        CameraIntentPlayground(modifier = Modifier.padding(innerPadding))
     }
 }
 

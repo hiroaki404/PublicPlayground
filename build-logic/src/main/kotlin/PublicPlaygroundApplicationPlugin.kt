@@ -23,6 +23,10 @@ class PublicPlaygroundApplicationPlugin : Plugin<Project> {
                     }
                 }
 
+                buildFeatures {
+                    buildConfig = true
+                }
+
                 buildTypes {
                     release {
                         isMinifyEnabled = false
