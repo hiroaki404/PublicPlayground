@@ -30,6 +30,8 @@ fun CameraIntentPlayground(modifier: Modifier = Modifier) {
         FileProvider.getUriForFile(context, "${BuildConfig.APPLICATION_ID}.fileprovider", file)
     Log.d("file", uri.toString()) // content scheme path
 
+    // you can use ActivityResultContracts.TakePicture() instead of StartActivityForResult,
+    // if not need to put extra
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
