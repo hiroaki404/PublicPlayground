@@ -20,7 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
 import java.io.File
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun CameraIntentPlayground(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -43,7 +42,7 @@ fun CameraIntentPlayground(modifier: Modifier = Modifier) {
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues
                 )
 
-                addExif(file)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) addExif(file)
 
                 context.contentResolver.openOutputStream(contentUri!!).use { output ->
                     file.inputStream().use { input ->
