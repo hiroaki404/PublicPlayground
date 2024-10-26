@@ -7,6 +7,7 @@ import android.media.ExifInterface
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -24,9 +25,11 @@ import java.io.File
 fun CameraIntentPlayground(modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
-    val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "IMG.jpg")
+    val file = File(context.cacheDir, "IMG.jpg")
+    Log.d("file", file.absolutePath) // file scheme path
     val uri =
         FileProvider.getUriForFile(context, "${BuildConfig.APPLICATION_ID}.fileprovider", file)
+    Log.d("file", uri.toString()) // content scheme path
 
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -36,18 +39,13 @@ fun CameraIntentPlayground(modifier: Modifier = Modifier) {
                     put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
                     put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
                 }
-                val uri = context.contentResolver.insert(
+                val contentUri = context.contentResolver.insert(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues
                 )
-                ExifInterface(file).apply {
-                    // その他の GPS 情報 (オプション)
-                    setAttribute(ExifInterface.TAG_GPS_LATITUDE, "0/0,0/0000,00000000/00000");
-                    setAttribute(ExifInterface.TAG_GPS_LATITUDE_REF, "0");
-                    setAttribute(ExifInterface.TAG_GPS_LONGITUDE, "0/0,0/0,000000/00000 ");
-                    setAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF, "0");
-                    saveAttributes()
-                }
-                context.contentResolver.openOutputStream(uri!!).use { output ->
+
+                addExif(file)
+
+                context.contentResolver.openOutputStream(contentUri!!).use { output ->
                     file.inputStream().use { input ->
                         input.copyTo(output!!)
                     }
@@ -58,13 +56,26 @@ fun CameraIntentPlayground(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Button(onClick = {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//            val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
+//            val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)  // for video
+            // you must give content scheme path from FileProvider
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-//            intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 5)
+//            intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 5)  // restriction for video
 
             launcher.launch(intent)
         }) {
             Text("Pick Content")
         }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.Q)
+private fun addExif(file: File) {
+    ExifInterface(file).apply {
+        // その他の GPS 情報 (オプション)
+        setAttribute(ExifInterface.TAG_GPS_LATITUDE, "0/0,0/0000,00000000/00000");
+        setAttribute(ExifInterface.TAG_GPS_LATITUDE_REF, "0");
+        setAttribute(ExifInterface.TAG_GPS_LONGITUDE, "0/0,0/0,000000/00000 ");
+        setAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF, "0");
+        saveAttributes()
     }
 }
