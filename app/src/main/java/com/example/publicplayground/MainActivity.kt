@@ -70,8 +70,9 @@ fun PublicPlaygroundApp() {
             )
         }
     ) { innerPadding ->
-        CameraIntentPlayground(modifier = Modifier.padding(innerPadding))
+//        CameraIntentPlayground(modifier = Modifier.padding(innerPadding))
 //        PhotoPickerPlayground(modifier = Modifier.padding(innerPadding))
+        VideoIntentPlayground(modifier = Modifier.padding(innerPadding))
     }
 }
 
