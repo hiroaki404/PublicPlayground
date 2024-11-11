@@ -1,4 +1,4 @@
-package com.example.publicplayground
+package com.example.publicplayground.fileandmedia
 
 import android.app.Activity
 import android.content.ContentValues
@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
+import com.example.publicplayground.BuildConfig
 import java.io.File
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.publicplayground
+package com.example.publicplayground.fileandmedia
 
 import android.app.Activity.MODE_PRIVATE
 import android.content.Context
@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.res.imageResource
+import com.example.publicplayground.R
 import java.io.File
 import okio.FileSystem
 import okio.Path.Companion.toPath
