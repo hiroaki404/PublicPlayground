@@ -1,8 +1,9 @@
-package com.example.publicplayground
+package com.example.publicplayground.fileandmedia
 
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.os.Build
 import android.os.Environment
@@ -18,9 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
+import com.example.publicplayground.BuildConfig
 import java.io.File
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun CameraIntentPlayground(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -31,6 +32,8 @@ fun CameraIntentPlayground(modifier: Modifier = Modifier) {
         FileProvider.getUriForFile(context, "${BuildConfig.APPLICATION_ID}.fileprovider", file)
     Log.d("file", uri.toString()) // content scheme path
 
+    // you can use ActivityResultContracts.TakePicture() instead of StartActivityForResult,
+    // if not need to put extra
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -43,11 +46,18 @@ fun CameraIntentPlayground(modifier: Modifier = Modifier) {
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues
                 )
 
-                addExif(file)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) addExif(file)
 
                 context.contentResolver.openOutputStream(contentUri!!).use { output ->
                     file.inputStream().use { input ->
                         input.copyTo(output!!)
+                    }
+                }
+                context.contentResolver.openInputStream(contentUri).use { _ ->
+                    file.inputStream().use { input ->
+                        val bitmap = BitmapFactory.decodeStream(input)
+                        Log.d("bitmap", "${bitmap.width} x ${bitmap.height}")
+                        Log.d("bitmap", "${bitmap.rowBytes}")
                     }
                 }
             }
@@ -56,14 +66,11 @@ fun CameraIntentPlayground(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Button(onClick = {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//            val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)  // for video
-            // you must give content scheme path from FileProvider
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-//            intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 5)  // restriction for video
 
             launcher.launch(intent)
         }) {
-            Text("Pick Content")
+            Text("Take Photo")
         }
     }
 }

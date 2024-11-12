@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.publicplayground.feature.workmanager.SimpleCoroutineWorker
+import com.example.publicplayground.fileandmedia.PickerLauncher
 import com.example.publicplayground.ui.theme.PublicPlaygroundTheme
 
 class MainActivity : ComponentActivity() {
@@ -70,7 +71,7 @@ fun PublicPlaygroundApp() {
             )
         }
     ) { innerPadding ->
-        CameraIntentPlayground(modifier = Modifier.padding(innerPadding))
+        PickerLauncher(modifier = Modifier.padding(innerPadding))
     }
 }
 
