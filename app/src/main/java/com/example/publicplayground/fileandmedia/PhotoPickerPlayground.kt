@@ -82,6 +82,7 @@ fun PhotoPickerPlayground(modifier: Modifier = Modifier) {
                 }
 
             }
+            addExif(file)
         }
 
     Column(modifier = modifier) {
@@ -115,7 +116,16 @@ private fun readExif(file: FileDescriptor) {
 private fun addExif(file: File) {
     ExifInterface(file).apply {
         // その他の GPS 情報 (オプション)
-        setAttribute(ExifInterface.TAG_DATETIME, "2021:09:01 12:00:00");
+        setAttribute(ExifInterface.TAG_DATETIME, "2021:09:01 12:11:02")
+        setAttribute(ExifInterface.TAG_DATETIME_ORIGINAL, "2021:09:01 12:11:02")
+        setAttribute(ExifInterface.TAG_DATETIME_DIGITIZED, "2021:09:01 12:11:02")
+
+        // 東京の緯度経度
+        setAttribute(ExifInterface.TAG_GPS_LATITUDE, "35/1,41/1,23/1")
+        setAttribute(ExifInterface.TAG_GPS_LATITUDE_REF, "0")
+        setAttribute(ExifInterface.TAG_GPS_LONGITUDE, "139/1,45/1,31/1")
+        setAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF, "0")
+
         saveAttributes()
     }
 }

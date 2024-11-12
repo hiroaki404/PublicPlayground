@@ -48,16 +48,8 @@ fun MoviePickerPlayground(modifier: Modifier = Modifier) {
                 }
             }
 
-//            MediaScannerConnection.scanFile(
-//                context,
-//                arrayOf(file.absolutePath),
-//                arrayOf("video/mp4"),
-//            ) { path, uri ->
-//            }
-//
-
             val receiver = MediaMetadataRetriever()
-            receiver.setDataSource(uri.path!!)
+            receiver.setDataSource(file.path)
             receiver.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH).let {
                 Log.d("width", "${it}")
             }
@@ -69,7 +61,7 @@ fun MoviePickerPlayground(modifier: Modifier = Modifier) {
             }
             Log.d("file", "${file.length()}")
             receiver.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DATE).let {
-                Log.d("bitrate", "${it}")
+                Log.d("date", "${it}")
             }
             receiver.extractMetadata(MediaMetadataRetriever.METADATA_KEY_LOCATION).let {
                 Log.d("location", "${it}")
