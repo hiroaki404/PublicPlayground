@@ -19,5 +19,8 @@ fun PickerLauncher(modifier: Modifier = Modifier) {
         PhotoPickerPlayground()
         VideoIntentPlayground()
         MoviePickerPlayground()
+
+        CustomPhotoPicker()
+        CustomMoviePicker()
     }
 }

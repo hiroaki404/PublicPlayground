@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import java.io.File
 import java.io.FileDescriptor
 
+// https://developers-jp.googleblog.com/2017/01/introducing-the-exifinterface-support-library.htmlも参照
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun PhotoPickerPlayground(modifier: Modifier = Modifier) {
