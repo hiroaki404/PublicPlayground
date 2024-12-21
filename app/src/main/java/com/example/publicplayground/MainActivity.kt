@@ -5,12 +5,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -25,6 +25,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.publicplayground.feature.workmanager.SimpleCoroutineWorker
 import com.example.publicplayground.fileandmedia.PickerLauncher
+import com.example.publicplayground.keyboard.KeyboardPlayground
 import com.example.publicplayground.ui.theme.PublicPlaygroundTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,12 +48,13 @@ class MainActivity : ComponentActivity() {
                             Color.Transparent.toArgb()
                     }
                 }
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    PublicPlaygroundApp()
-                }
+                KeyboardPlayground(
+                    modifier = Modifier
+                        .background(Color.Cyan)
+                        .navigationBarsPadding()
+                        .statusBarsPadding()
+                        .background(Color.White)
+                )
             }
         }
     }
