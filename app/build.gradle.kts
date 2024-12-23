@@ -33,4 +33,6 @@ dependencies {
 
     implementation(libs.coil3)
     implementation(libs.okio)
+
+    implementation("sample:shared-android:1.0")
 }

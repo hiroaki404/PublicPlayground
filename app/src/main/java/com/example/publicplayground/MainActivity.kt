@@ -5,10 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,9 +20,9 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.example.kmp_local_library_sample.Greeting
 import com.example.publicplayground.feature.workmanager.SimpleCoroutineWorker
 import com.example.publicplayground.fileandmedia.PickerLauncher
-import com.example.publicplayground.keyboard.KeyboardPlayground
 import com.example.publicplayground.ui.theme.PublicPlaygroundTheme
 
 class MainActivity : ComponentActivity() {
@@ -48,13 +45,14 @@ class MainActivity : ComponentActivity() {
                             Color.Transparent.toArgb()
                     }
                 }
-                KeyboardPlayground(
-                    modifier = Modifier
-                        .background(Color.Cyan)
-                        .navigationBarsPadding()
-                        .statusBarsPadding()
-                        .background(Color.White)
-                )
+//                KeyboardPlayground(
+//                    modifier = Modifier
+//                        .background(Color.Cyan)
+//                        .navigationBarsPadding()
+//                        .statusBarsPadding()
+//                        .background(Color.White)
+//                )
+                PublicPlaygroundApp()
             }
         }
     }
@@ -67,7 +65,7 @@ fun PublicPlaygroundApp() {
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Playground")
+                    Text(Greeting().greet())
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
             )
