@@ -20,11 +20,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.kmp_local_library_sample.Greeting
 import com.example.publicplayground.feature.workmanager.SimpleCoroutineWorker
 import com.example.publicplayground.fileandmedia.PickerLauncher
-import com.example.publicplayground.keyboard.KeyboardPlayground
-import com.example.publicplayground.keyboard.KeyboardPlaygroundWrapper
 import com.example.publicplayground.ui.theme.PublicPlaygroundTheme
 
 class MainActivity : ComponentActivity() {
@@ -60,7 +57,7 @@ fun PublicPlaygroundApp() {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(Greeting().greet())
+                    Text("Playground")
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
             )

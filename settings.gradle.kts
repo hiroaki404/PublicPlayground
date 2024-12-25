@@ -1,6 +1,3 @@
-import java.io.FileInputStream
-import java.util.Properties
-
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -20,15 +17,15 @@ dependencyResolutionManagement {
         // use maven local repository
 //        mavenLocal()
         // use maven github package repository
-        maven {
-            url = uri("https://maven.pkg.github.com/hiroaki404/kmp-local-library-sample")
-            credentials {
-                val localProperties = Properties()
-                localProperties.load(FileInputStream(file("local.properties")))
-                username = "${localProperties["gpr.user"]}"
-                password = "${localProperties["gpr.key"]}"
-            }
-        }
+//        maven {
+//            url = uri("https://maven.pkg.github.com/hiroaki404/kmp-local-library-sample")
+//            credentials {
+//                val localProperties = Properties()
+//                localProperties.load(FileInputStream(file("local.properties")))
+//                username = "${localProperties["gpr.user"]}"
+//                password = "${localProperties["gpr.key"]}"
+//            }
+//        }
     }
 }
 

@@ -34,5 +34,6 @@ dependencies {
     implementation(libs.coil3)
     implementation(libs.okio)
 
-    implementation("sample:shared-android:1.0")
+    // maven github package or local
+//    implementation("sample:shared-android:1.0")
 }
