@@ -10,4 +10,5 @@ dependencies {
     testImplementation(libs.turbin)
     testImplementation(libs.androidx.test.truth)
     testImplementation(libs.coroutines.test)
+    testImplementation(libs.kotest.assertions.core)
 }
