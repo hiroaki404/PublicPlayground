@@ -1,5 +1,6 @@
 package com.example.turbine
 
+import app.cash.turbine.Turbine
 import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -68,6 +69,34 @@ class TurbineSampleTest {
             awaitItem() shouldBe 1
             sharedFlow.emit(2)
             awaitItem() shouldBe 2
+        }
+    }
+
+    @Test
+    fun useStandaloneTurbines() = runTest {
+        class FakeLogger {
+            val message = Turbine<String>()
+
+            fun log(message: String) {
+                this.message.add(message)
+            }
+        }
+
+        class MessageRepository(val logger: FakeLogger) {
+            private val _message = "hello"
+            fun getMessage() = flow {
+                val message = _message
+                logger.log(message)
+                emit(message)
+            }
+        }
+
+        val fakeLogger = FakeLogger()
+        val messageRepository = MessageRepository(fakeLogger)
+        messageRepository.getMessage().test {
+            awaitItem() shouldBe "hello"
+            fakeLogger.message.awaitItem() shouldBe "hello"
+            awaitComplete()
         }
     }
 }
