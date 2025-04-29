@@ -2,9 +2,14 @@ package com.example.turbine
 
 import app.cash.turbine.test
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
@@ -31,6 +36,38 @@ class TurbineSampleTest {
             awaitItem() shouldBe 1
             awaitItem() shouldBe 2
             awaitComplete()
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun sharedFlowTest() = runTest {
+        val sharedFlow = MutableSharedFlow<Int>()
+        val values = mutableListOf<Int>()
+
+        // NG: because endless flow
+//        flow.toList(list)
+
+        // OK
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            sharedFlow.toList(values)
+        }
+
+        sharedFlow.emit(1)
+        values[0] shouldBe 1
+        sharedFlow.emit(2)
+        values[1] shouldBe 2
+    }
+
+    @Test
+    fun sharedFlowWithTurbine() = runTest {
+        val sharedFlow = MutableSharedFlow<Int>()
+
+        sharedFlow.test {
+            sharedFlow.emit(1)
+            awaitItem() shouldBe 1
+            sharedFlow.emit(2)
+            awaitItem() shouldBe 2
         }
     }
 }
