@@ -72,30 +72,34 @@ class TurbineSampleTest {
         }
     }
 
+    interface Logger {
+        fun log(message: String)
+    }
+
     @Test
     fun useStandaloneTurbines() = runTest {
-        class FakeLogger {
+        class FakeLogger : Logger {
             val message = Turbine<String>()
 
-            fun log(message: String) {
+            override fun log(message: String) {
                 this.message.add(message)
             }
         }
 
-        class MessageRepository(val logger: FakeLogger) {
-            private val _message = "hello"
-            fun getMessage() = flow {
-                val message = _message
-                logger.log(message)
-                emit(message)
+        class GreetingRepository(val logger: Logger) {
+            private val _greeting = "hello"
+            fun greeting() = flow {
+                val greeting = _greeting
+                logger.log(greeting)
+                emit(greeting)
             }
         }
 
         val fakeLogger = FakeLogger()
-        val messageRepository = MessageRepository(fakeLogger)
-        messageRepository.getMessage().test {
+        val greetingRepository = GreetingRepository(fakeLogger)
+        greetingRepository.greeting().test {
             awaitItem() shouldBe "hello"
-            fakeLogger.message.awaitItem() shouldBe "hello"
+            fakeLogger.message.awaitItem() shouldBe "hello" // 検証
             awaitComplete()
         }
     }
