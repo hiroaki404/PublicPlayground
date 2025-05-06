@@ -103,4 +103,35 @@ class TurbineSampleTest {
             awaitComplete()
         }
     }
+
+    interface GreetingApi {
+        suspend fun getGreeting(): String
+    }
+
+    @Test
+    fun useStandaloneTurbinesInSuspendFunction() = runTest {
+        class FakeGreetingApi : GreetingApi {
+            val greeting = Turbine<String>()
+
+            override suspend fun getGreeting(): String {
+                return greeting.awaitItem()
+            }
+        }
+
+        class GreetingRepository(val api: GreetingApi) {
+            fun greeting() = flow {
+                val greeting = api.getGreeting()
+                emit(greeting)
+            }
+        }
+
+        val fakeGreetingApi = FakeGreetingApi()
+        val greetingRepository = GreetingRepository(fakeGreetingApi)
+        greetingRepository.greeting().test {
+            expectNoEvents() // この時点ではgetGreetingが中断中なのでイベントが起きていない
+            fakeGreetingApi.greeting.add("hello")
+            awaitItem() shouldBe "hello" // getGreetingが実行されている
+            awaitComplete()
+        }
+    }
 }
