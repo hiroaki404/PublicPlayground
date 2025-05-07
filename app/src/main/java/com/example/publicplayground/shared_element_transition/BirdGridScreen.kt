@@ -23,15 +23,6 @@ fun BirdGridScreen(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val birds = listOf(
-        Bird(1, "スズメ", "sparrow"),
-        Bird(2, "カラス", "crow"),
-        Bird(3, "ツバメ", "swallow"),
-        Bird(4, "ハト", "pigeon"),
-        Bird(5, "ウグイス", "bush_warbler"),
-        Bird(6, "メジロ", "white_eye")
-    )
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(16.dp),
@@ -59,9 +50,3 @@ fun BirdGridScreen(
         }
     }
 }
-
-data class Bird(
-    val id: Int,
-    val name: String,
-    val imageResId: String
-)

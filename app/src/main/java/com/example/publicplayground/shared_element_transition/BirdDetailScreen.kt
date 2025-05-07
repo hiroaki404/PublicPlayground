@@ -22,15 +22,6 @@ fun BirdDetailScreen(
     birdId: Int,
     modifier: Modifier = Modifier
 ) {
-    val birds = listOf(
-        Bird(1, "スズメ", "sparrow"),
-        Bird(2, "カラス", "crow"),
-        Bird(3, "ツバメ", "swallow"),
-        Bird(4, "ハト", "pigeon"),
-        Bird(5, "ウグイス", "bush_warbler"),
-        Bird(6, "メジロ", "white_eye")
-    )
-
     val bird = birds.find { it.id == birdId }
 
     Scaffold(
