@@ -55,7 +55,7 @@ fun BirdGridScreen(
                             .data(bird.imageResId)
                             .crossfade(true)
                             .build(),
-                        contentDescription = bird.name,
+                        contentDescription = "image",
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth(),

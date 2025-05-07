@@ -57,7 +57,7 @@ fun BirdDetailScreen(
                         .data(it.imageResId)
                         .crossfade(true)
                         .build(),
-                    contentDescription = it.name,
+                    contentDescription = "image",
                     modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(1f),
