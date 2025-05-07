@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -65,19 +66,26 @@ fun BirdDetailScreen(
             }
         ) { paddingValues ->
             bird?.let {
+                val useSharedElement = bird.id % 2 == 1
                 Box(
                     modifier = Modifier
                         .padding(paddingValues)
                         .padding(horizontal = 16.dp)
                         .clip(RoundedCornerShape(8.dp))
                         .background(Color.Blue.copy(alpha = 0.2f))
-                        .sharedBounds(
-                            sharedContentState = rememberSharedContentState(it.id),
-                            animatedVisibilityScope = animatedVisibilityScope,
-                            enter = fadeIn(),
-                            exit = fadeOut(),
-                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                        )
+                        .run {
+                            if (useSharedElement) {
+                                this
+                            } else {
+                                this.sharedBounds(
+                                    sharedContentState = rememberSharedContentState(it.id),
+                                    animatedVisibilityScope = animatedVisibilityScope,
+                                    enter = fadeIn(tween(2_000)),
+                                    exit = fadeOut(tween(2_000)),
+                                    resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                                )
+                            }
+                        }
                         .fillMaxWidth()
                 ) {
                     Column(
@@ -86,6 +94,13 @@ fun BirdDetailScreen(
                             .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        Text(
+                            text = if (useSharedElement) {
+                                "use shared element"
+                            } else {
+                                "use shared bounds"
+                            },
+                        )
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
                                 .data(it.imageResId)
@@ -93,10 +108,16 @@ fun BirdDetailScreen(
                                 .build(),
                             contentDescription = "image",
                             modifier = Modifier
-//                                .sharedElement(
-//                                    sharedContentState = rememberSharedContentState(bird.id),
-//                                    animatedVisibilityScope = animatedVisibilityScope,
-//                                )
+                                .run {
+                                    if (useSharedElement) {
+                                        this.sharedElement(
+                                            sharedContentState = rememberSharedContentState(it.id),
+                                            animatedVisibilityScope = animatedVisibilityScope,
+                                        )
+                                    } else {
+                                        this
+                                    }
+                                }
                                 .fillMaxWidth()
                                 .aspectRatio(1f),
                             contentScale = ContentScale.Crop

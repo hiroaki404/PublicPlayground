@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -68,19 +69,26 @@ fun BirdGridScreen(
                     .fillMaxSize(),
             ) {
                 items(birds) { bird ->
+                    val useSharedElement = bird.id % 2 == 1
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(8.dp))
                             .background(Color.Gray.copy(alpha = 0.2f))
-                            .sharedBounds(
-                                sharedContentState = rememberSharedContentState(bird.id),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                                enter = fadeIn(),
-                                exit = fadeOut(),
-                                resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
-                            )
+                            .run {
+                                if (useSharedElement) {
+                                    this
+                                } else {
+                                    this.sharedBounds(
+                                            sharedContentState = rememberSharedContentState(bird.id),
+                                            animatedVisibilityScope = animatedVisibilityScope,
+                                            enter = fadeIn(tween(2_000)),
+                                            exit = fadeOut(tween(2_000)),
+                                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                                        )
+                                }
+                            }
                             .clickable { onBirdClick(bird.id) }
                     ) {
                         Column(
@@ -96,10 +104,16 @@ fun BirdGridScreen(
                                     .build(),
                                 contentDescription = "image",
                                 modifier = Modifier
-//                                    .sharedElement(
-//                                        sharedContentState = rememberSharedContentState(bird.id),
-//                                        animatedVisibilityScope = animatedVisibilityScope,
-//                                    )
+                                    .run {
+                                        if (useSharedElement) {
+                                            this.sharedElement(
+                                                sharedContentState = rememberSharedContentState(bird.id),
+                                                animatedVisibilityScope = animatedVisibilityScope,
+                                            )
+                                        } else {
+                                            this
+                                        }
+                                    }
                                     .weight(1f)
                                     .fillMaxWidth(),
                             )
