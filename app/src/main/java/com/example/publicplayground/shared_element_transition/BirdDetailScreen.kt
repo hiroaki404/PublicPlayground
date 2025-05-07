@@ -5,13 +5,17 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,6 +27,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,35 +64,50 @@ fun BirdDetailScreen(
                 )
             }
         ) { paddingValues ->
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                bird?.let {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(it.imageResId)
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = "image",
+            bird?.let {
+                Box(
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .padding(horizontal = 16.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.Blue.copy(alpha = 0.2f))
+                        .sharedBounds(
+                            sharedContentState = rememberSharedContentState(it.id),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            enter = fadeIn(),
+                            exit = fadeOut(),
+                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                        )
+                        .fillMaxWidth()
+                ) {
+                    Column(
                         modifier = Modifier
-                            .sharedElement(
-                                sharedContentState = rememberSharedContentState(bird.id),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                            )
                             .fillMaxWidth()
-                            .aspectRatio(1f),
-                        contentScale = ContentScale.Crop
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(text = "ID: ${it.id}")
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "名前: ${it.name}")
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "画像リソース: ${it.imageResId}")
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(it.imageResId)
+                                .crossfade(true)
+                                .build(),
+                            contentDescription = "image",
+                            modifier = Modifier
+//                                .sharedElement(
+//                                    sharedContentState = rememberSharedContentState(bird.id),
+//                                    animatedVisibilityScope = animatedVisibilityScope,
+//                                )
+                                .fillMaxWidth()
+                                .aspectRatio(1f),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(text = "ID: ${it.id}")
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(text = "名前: ${it.name}")
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(text = "画像リソース: ${it.imageResId}")
+                    }
                 }
             }
         }
