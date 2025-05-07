@@ -5,15 +5,19 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,6 +27,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,19 +64,28 @@ fun BirdDetailScreen(
                 )
             }
         ) { paddingValues ->
-            Card(
-                modifier = Modifier
-                    .padding(paddingValues)
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth()
-            ) {
-                Column(
+            bird?.let {
+                Box(
                     modifier = Modifier
+                        .padding(paddingValues)
+                        .padding(horizontal = 16.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(Color.Blue.copy(alpha = 0.2f))
+                        .sharedBounds(
+                            sharedContentState = rememberSharedContentState(it.id),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            enter = fadeIn(),
+                            exit = fadeOut(),
+                            resizeMode = SharedTransitionScope.ResizeMode.ScaleToBounds(),
+                        )
                         .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    bird?.let {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
                                 .data(it.imageResId)
@@ -78,10 +93,10 @@ fun BirdDetailScreen(
                                 .build(),
                             contentDescription = "image",
                             modifier = Modifier
-                                .sharedElement(
-                                    sharedContentState = rememberSharedContentState(bird.id),
-                                    animatedVisibilityScope = animatedVisibilityScope,
-                                )
+//                                .sharedElement(
+//                                    sharedContentState = rememberSharedContentState(bird.id),
+//                                    animatedVisibilityScope = animatedVisibilityScope,
+//                                )
                                 .fillMaxWidth()
                                 .aspectRatio(1f),
                             contentScale = ContentScale.Crop
