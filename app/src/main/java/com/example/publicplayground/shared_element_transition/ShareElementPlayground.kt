@@ -2,31 +2,24 @@ package com.example.publicplayground.shared_element_transition
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 
 @Composable
 fun ShareElementPlayground(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     NavHost(
+        modifier = modifier,
         navController = navController,
-        startDestination = "bird_grid"
+        startDestination = Destination.BirdGrid
     ) {
-        composable("bird_grid") {
+        composable<Destination.BirdGrid> {
             BirdGridScreen(navController = navController)
         }
-        composable(
-            route = "bird_detail/{birdId}",
-            arguments = listOf(
-                navArgument("birdId") {
-                    type = NavType.IntType
-                }
-            )
-        ) { backStackEntry ->
-            val birdId = backStackEntry.arguments?.getInt("birdId") ?: return@composable
+        composable<Destination.BirdDetail> { backStackEntry ->
+            val birdId = backStackEntry.toRoute<Destination.BirdDetail>().birdId
             BirdDetailScreen(
                 navController = navController,
                 birdId = birdId

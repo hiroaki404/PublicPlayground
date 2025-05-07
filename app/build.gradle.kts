@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.publicplayground.android.application)
     alias(libs.plugins.publicplayground.android.compose)
     alias(libs.plugins.publicplayground.android.kotlin)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android.namespace = "com.example.publicplayground"
@@ -38,4 +39,7 @@ dependencies {
 //    implementation("sample:shared-android:1.0")
 
     implementation(libs.androidx.navigation.compose)
+
+    // Kotlin Serialization
+    implementation(libs.kotlinx.serialization.json)
 }

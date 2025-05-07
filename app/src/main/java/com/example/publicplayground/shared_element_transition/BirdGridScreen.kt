@@ -45,7 +45,7 @@ fun BirdGridScreen(
                     .fillMaxWidth()
                     .aspectRatio(1f)
                     .clickable {
-                        navController.navigate("bird_detail/${bird.id}")
+                        navController.navigate(Destination.BirdDetail(bird.id))
                     }
             ) {
                 Column(
