@@ -14,9 +14,14 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 
 @Composable
 fun BirdGridScreen(
@@ -42,9 +47,23 @@ fun BirdGridScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp)
+                        .padding(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = bird.name)
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(bird.imageResId)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = bird.name,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                    )
+                    Text(
+                        text = bird.name,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
                 }
             }
         }
