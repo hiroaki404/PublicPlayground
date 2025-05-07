@@ -26,6 +26,7 @@ robolectric = "4.13"
 androidx-test-junit = "1.2.1"
 coil3 = "3.0.0-rc01"
 okio = "3.9.1"
+navigation-compose = "2.8.9"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -62,6 +63,7 @@ androidx-test-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref 
 coil3 = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
 coil3Network = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil3" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 
 # for build-logic
 androidGradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }

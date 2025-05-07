@@ -36,4 +36,6 @@ dependencies {
 
     // maven github package or local
 //    implementation("sample:shared-android:1.0")
+
+    implementation(libs.androidx.navigation.compose)
 }
