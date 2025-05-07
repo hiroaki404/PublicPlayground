@@ -16,13 +16,15 @@ fun ShareElementPlayground(modifier: Modifier = Modifier) {
         startDestination = Destination.BirdGrid
     ) {
         composable<Destination.BirdGrid> {
-            BirdGridScreen(navController = navController)
+            BirdGridScreen(onBirdClick = { birdId ->
+                navController.navigate(Destination.BirdDetail(birdId))
+            })
         }
         composable<Destination.BirdDetail> { backStackEntry ->
             val birdId = backStackEntry.toRoute<Destination.BirdDetail>().birdId
             BirdDetailScreen(
-                navController = navController,
-                birdId = birdId
+                birdId = birdId,
+                navigateUp = { navController.navigateUp() }
             )
         }
     }
