@@ -3,6 +3,10 @@ package com.example.publicplayground.shared_element_transition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -43,8 +47,14 @@ fun ShareElementPlayground(modifier: Modifier = Modifier) {
             }
 
             composable<Destination.CameraSpec> {
+                var expanded by remember { mutableStateOf(false) }
                 CameraSpecScreen(
                     onBack = { navController.navigateUp() },
+                    expanded = expanded,
+                    lookaheadScope = this@SharedTransitionLayout,
+                    onImageClick = {
+                        expanded = !expanded
+                    }
                 )
             }
         }
