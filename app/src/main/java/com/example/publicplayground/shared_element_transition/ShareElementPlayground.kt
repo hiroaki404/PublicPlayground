@@ -26,7 +26,10 @@ fun ShareElementPlayground(modifier: Modifier = Modifier) {
                         navController.navigate(Destination.BirdDetail(birdId))
                     },
                     sharedTransitionScope = this@SharedTransitionLayout,
-                    animatedVisibilityScope = this@composable
+                    animatedVisibilityScope = this@composable,
+                    goToCameraSpec = {
+                        navController.navigate(Destination.CameraSpec)
+                    }
                 )
             }
             composable<Destination.BirdDetail> { backStackEntry ->
@@ -36,6 +39,12 @@ fun ShareElementPlayground(modifier: Modifier = Modifier) {
                     navigateUp = { navController.navigateUp() },
                     sharedTransitionScope = this@SharedTransitionLayout,
                     animatedVisibilityScope = this@composable
+                )
+            }
+
+            composable<Destination.CameraSpec> {
+                CameraSpecScreen(
+                    onBack = { navController.navigateUp() },
                 )
             }
         }
