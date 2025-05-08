@@ -51,7 +51,6 @@ fun ShareElementPlayground(modifier: Modifier = Modifier) {
                 CameraSpecScreen(
                     onBack = { navController.navigateUp() },
                     expanded = expanded,
-                    lookaheadScope = this@SharedTransitionLayout,
                     onImageClick = {
                         expanded = !expanded
                     }
