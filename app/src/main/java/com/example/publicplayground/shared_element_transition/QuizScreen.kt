@@ -41,8 +41,6 @@ import com.example.publicplayground.R
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun QuizScreen(expanded: Boolean, onBack: () -> Unit = {}, onButtonClick: () -> Unit = {}) {
-    var isAnswered by remember { mutableStateOf(false) }
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -59,6 +57,7 @@ fun QuizScreen(expanded: Boolean, onBack: () -> Unit = {}, onButtonClick: () -> 
         }
     ) { paddingValues ->
         LookaheadScope {
+            var isDisplayAnswer by remember { mutableStateOf(false) }
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -85,19 +84,19 @@ fun QuizScreen(expanded: Boolean, onBack: () -> Unit = {}, onButtonClick: () -> 
 
                 Button(
                     onClick = {
-                        isAnswered = !isAnswered
+                        isDisplayAnswer = !isDisplayAnswer
                         onButtonClick.invoke()
                     }
                 ) {
                     Text(
                         text = stringResource(
-                            id = if (isAnswered) R.string.quiz_button_reset
+                            id = if (isDisplayAnswer) R.string.quiz_button_reset
                             else R.string.quiz_button_initial
                         )
                     )
                 }
 
-                if (isAnswered) {
+                if (isDisplayAnswer) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = stringResource(id = R.string.quiz_answer))
                 }
