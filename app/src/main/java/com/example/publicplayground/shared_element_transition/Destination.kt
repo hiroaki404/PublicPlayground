@@ -9,4 +9,7 @@ sealed class Destination {
 
     @Serializable
     data class BirdDetail(val birdId: Int) : Destination()
+
+    @Serializable
+    object CameraSpec : Destination()
 }
