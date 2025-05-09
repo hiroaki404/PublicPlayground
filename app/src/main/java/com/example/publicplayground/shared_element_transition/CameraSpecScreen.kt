@@ -60,8 +60,8 @@ fun CameraSpecScreen(
                         model = R.drawable.camera,
                         contentDescription = "カメラ画像",
                         modifier = Modifier
-                            .animateBounds(lookaheadScope = this)
                             .size(if (expanded) 400.dp else 200.dp)
+                            .animateBounds(lookaheadScope = this)
                             .clickable {
                                 onImageClick.invoke()
                             }
