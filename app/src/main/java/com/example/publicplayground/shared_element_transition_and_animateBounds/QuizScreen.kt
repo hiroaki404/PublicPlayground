@@ -88,6 +88,7 @@ fun QuizScreen(expanded: Boolean, onBack: () -> Unit = {}, onButtonClick: () -> 
 
                 if (expanded) {
                     Text(text = stringResource(id = R.string.quiz_answer))
+                    Text("AI generated images for the images.")
                 }
             }
         }

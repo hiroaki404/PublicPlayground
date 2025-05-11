@@ -128,6 +128,8 @@ fun BirdDetailScreen(
                         Text(text = "名前: ${it.name}")
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(text = "画像リソース: ${it.imageResId}")
+
+                        Text("AI generated images for the images.")
                     }
                 }
             }

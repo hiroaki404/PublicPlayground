@@ -142,6 +142,7 @@ fun BirdGridScreen(
                 Button(onClick = goToQuiz) {
                     Text(stringResource(id = R.string.quiz_navigation_button))
                 }
+                Text("AI generated images for the images.")
             }
         }
     }
