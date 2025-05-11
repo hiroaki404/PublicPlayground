@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PublicPlayground</string>
+    <string name="quiz_button_initial">Who is he?</string>
+    <string name="quiz_button_reset">Reset</string>
+    <string name="quiz_answer">He is Shimaenaga!</string>
+    <string name="quiz_navigation_button">Quiz</string>
+    <string name="camera_spec_button">Camera Spec</string>
 </resources>

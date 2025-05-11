@@ -33,6 +33,9 @@ fun ShareElementPlayground(modifier: Modifier = Modifier) {
                     animatedVisibilityScope = this@composable,
                     goToCameraSpec = {
                         navController.navigate(Destination.CameraSpec)
+                    },
+                    goToQuiz = {
+                        navController.navigate(Destination.Quiz)
                     }
                 )
             }
@@ -52,6 +55,17 @@ fun ShareElementPlayground(modifier: Modifier = Modifier) {
                     onBack = { navController.navigateUp() },
                     expanded = expanded,
                     onImageClick = {
+                        expanded = !expanded
+                    }
+                )
+            }
+
+            composable<Destination.Quiz> {
+                var expanded by remember { mutableStateOf(false) }
+                QuizScreen(
+                    expanded = expanded,
+                    onBack = { navController.navigateUp() },
+                    onButtonClick = {
                         expanded = !expanded
                     }
                 )

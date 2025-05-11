@@ -12,4 +12,7 @@ sealed class Destination {
 
     @Serializable
     object CameraSpec : Destination()
+
+    @Serializable
+    object Quiz : Destination()
 }

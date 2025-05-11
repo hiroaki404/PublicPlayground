@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.animateBounds
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -53,73 +54,77 @@ fun CameraSpecScreen(
             )
         }
     ) { paddingValues ->
-        LookaheadScope {
-            val imageContent = remember {
-                movableContentWithReceiverOf<LookaheadScope, Boolean> { expanded ->
-                    AsyncImage(
-                        model = R.drawable.camera,
-                        contentDescription = "カメラ画像",
-                        modifier = Modifier
-                            .animateBounds(lookaheadScope = this)
-                            .size(if (expanded) 400.dp else 200.dp)
-                            .clickable {
-                                onImageClick.invoke()
-                            }
-                    )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp),
+        ) {
+            LookaheadScope {
+                val imageContent = remember {
+                    movableContentWithReceiverOf<LookaheadScope, Boolean> { expanded ->
+                        AsyncImage(
+                            model = R.drawable.camera,
+                            contentDescription = "カメラ画像",
+                            modifier = Modifier
+                                .size(if (expanded) 400.dp else 200.dp)
+                                .animateBounds(lookaheadScope = this)
+                                .clickable {
+                                    onImageClick()
+                                }
+                        )
+                    }
                 }
-            }
 
-            val cardContent = remember {
-                movableContentWithReceiverOf<LookaheadScope> {
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .animateBounds(lookaheadScope = this),
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                val cardContent = remember {
+                    movableContentWithReceiverOf<LookaheadScope> {
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .animateBounds(lookaheadScope = this),
                         ) {
-                            Text(
-                                text = "カメラスペック",
-                                style = MaterialTheme.typography.titleLarge
-                            )
-                            Text("センサーサイズ: 35mmフルサイズ")
-                            Text("有効画素数: 約4,500万画素")
-                            Text("ISO感度: 100-51200")
-                            Text("シャッター速度: 1/8000秒 - 30秒")
-                            Text("連続撮影: 最大10コマ/秒")
-                            Text("動画撮影: 4K 60fps")
+                            SpecText()
                         }
                     }
                 }
-            }
 
-            if (expanded) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    imageContent(true)
-                    cardContent()
-                }
-            } else {
-                Row(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    imageContent(false)
-                    cardContent()
+                if (expanded) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        imageContent(true)
+                        cardContent()
+                    }
+                } else {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        imageContent(false)
+                        cardContent()
+                    }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun SpecText() {
+    Column(
+        modifier = Modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(
+            text = "カメラスペック",
+            style = MaterialTheme.typography.titleLarge
+        )
+        Text("センサーサイズ: 35mmフルサイズ")
+        Text("有効画素数: 約4,500万画素")
+        Text("ISO感度: 100-51200")
+        Text("シャッター速度: 1/8000秒 - 30秒")
+        Text("連続撮影: 最大10コマ/秒")
+        Text("動画撮影: 4K 60fps")
     }
 }
 
