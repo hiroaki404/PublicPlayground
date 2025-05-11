@@ -1,4 +1,4 @@
-package com.example.publicplayground.shared_element_transition
+package com.example.publicplayground.shared_element_transition_and_animateBounds
 
 import com.example.publicplayground.R
 
