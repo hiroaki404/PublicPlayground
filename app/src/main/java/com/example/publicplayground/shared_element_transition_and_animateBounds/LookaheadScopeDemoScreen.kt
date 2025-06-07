@@ -51,7 +51,7 @@ fun LookaheadScopeUseLowLevelApiDemoScreenContent(
                             .padding(8.dp)
                             .size(if (isInColumn) 80.dp else 20.dp)
 //                            .size(50.dp)
-                            .animatePlacement(this),
+                            .animatePlacement(),
                         color = color
                     ) {}
                 }

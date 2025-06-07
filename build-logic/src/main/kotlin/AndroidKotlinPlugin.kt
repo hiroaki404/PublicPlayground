@@ -14,6 +14,7 @@ class AndroidKotlinPlugin : Plugin<Project> {
                     compilerOptions {
                         jvmTarget.set(JvmTarget.JVM_17)
                         freeCompilerArgs.add("-Xwhen-guards")
+                        freeCompilerArgs.add("-Xcontext-receivers")
                     }
                 }
             }

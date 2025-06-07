@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.round
 // https://developer.android.com/reference/kotlin/androidx/compose/ui/layout/LookaheadScope
 // https://proandroiddev.com/animations-with-lookahead-in-jetpack-compose-60423fe0d1a7
 
-fun Modifier.animatePlacement(
-    lookaheadScope: LookaheadScope,
-): Modifier = this.then(AnimatePlacementNodeElement(lookaheadScope))
+context(LookaheadScope)
+fun Modifier.animatePlacement(): Modifier =
+    this.then(AnimatePlacementNodeElement(this@LookaheadScope))
 
 // Creates a custom node element for the AnimatedPlacementModifierNode above.
 data class AnimatePlacementNodeElement(val lookaheadScope: LookaheadScope) :
