@@ -37,8 +37,8 @@ fun ShareElementPlayground(modifier: Modifier = Modifier) {
                     goToQuiz = {
                         navController.navigate(Destination.Quiz)
                     },
-                    goToLookaheadScopeDemo = {
-                        navController.navigate(Destination.LookaheadScopeDemo)
+                    goToLookaheadScopeUseLowLevelApiDemo = {
+                        navController.navigate(Destination.LookaheadScopeUseLowLevelApiDemo)
                     }
                 )
             }
@@ -74,8 +74,8 @@ fun ShareElementPlayground(modifier: Modifier = Modifier) {
                 )
             }
 
-            composable<Destination.LookaheadScopeDemo> {
-                LookaheadScopeDemoScreen()
+            composable<Destination.LookaheadScopeUseLowLevelApiDemo> {
+                LookaheadScopeUseLowLevelApiDemoScreen()
             }
         }
     }

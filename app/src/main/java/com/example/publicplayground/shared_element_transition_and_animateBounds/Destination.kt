@@ -17,5 +17,5 @@ sealed class Destination {
     object Quiz : Destination()
 
     @Serializable
-    object LookaheadScopeDemo : Destination()
+    object LookaheadScopeUseLowLevelApiDemo : Destination()
 }

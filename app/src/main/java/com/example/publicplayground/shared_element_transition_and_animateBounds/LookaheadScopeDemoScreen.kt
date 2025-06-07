@@ -26,12 +26,12 @@ import androidx.compose.ui.unit.dp
 // https://proandroiddev.com/animations-with-lookahead-in-jetpack-compose-60423fe0d1a7
 
 @Composable
-fun LookaheadScopeDemoScreen() {
-    LookaheadScopeDemoScreenContent()
+fun LookaheadScopeUseLowLevelApiDemoScreen() {
+    LookaheadScopeUseLowLevelApiDemoScreenContent()
 }
 
 @Composable
-fun LookaheadScopeDemoScreenContent(
+fun LookaheadScopeUseLowLevelApiDemoScreenContent(
     modifier: Modifier = Modifier,
 ) {
     val colors = listOf(
@@ -80,7 +80,7 @@ fun LookaheadScopeDemoScreenContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun LookaheadScopeDemoScreenPreview() {
-    LookaheadScopeDemoScreenContent()
+private fun LookaheadScopeUseLowLevelApiDemoScreenPreview() {
+    LookaheadScopeUseLowLevelApiDemoScreenContent()
 }
 
