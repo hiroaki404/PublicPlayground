@@ -4,6 +4,7 @@ import androidx.compose.animation.core.AnimationVector2D
 import androidx.compose.animation.core.DeferredTargetAnimation
 import androidx.compose.animation.core.ExperimentalAnimatableApi
 import androidx.compose.animation.core.VectorConverter
+import androidx.compose.animation.core.tween
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ApproachLayoutModifierNode
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.round
 
 // refer to
 // https://developer.android.com/reference/kotlin/androidx/compose/ui/layout/LookaheadScope
+// https://proandroiddev.com/animations-with-lookahead-in-jetpack-compose-60423fe0d1a7
 
 fun Modifier.animatePlacement(
     lookaheadScope: LookaheadScope,
@@ -46,10 +48,14 @@ class AnimatedPlacementModifierNode(var lookaheadScope: LookaheadScope) :
     val offsetAnimation: DeferredTargetAnimation<IntOffset, AnimationVector2D> =
         DeferredTargetAnimation(IntOffset.VectorConverter)
 
+    val sizeAnimation: DeferredTargetAnimation<IntSize, AnimationVector2D> =
+        DeferredTargetAnimation(IntSize.VectorConverter)
+
     override fun isMeasurementApproachInProgress(lookaheadSize: IntSize): Boolean {
         // Since we only animate the placement here, we can consider measurement approach
         // complete.
-        return false
+        sizeAnimation.updateTarget(lookaheadSize, coroutineScope, tween(3_000))
+        return !sizeAnimation.isIdle
     }
 
     // Returns true when the offset animation is in progress, false otherwise.
@@ -60,7 +66,7 @@ class AnimatedPlacementModifierNode(var lookaheadScope: LookaheadScope) :
             with(lookaheadScope) {
                 lookaheadScopeCoordinates.localLookaheadPositionOf(lookaheadCoordinates).round()
             }
-        offsetAnimation.updateTarget(target, coroutineScope)
+        offsetAnimation.updateTarget(target, coroutineScope, tween(3_000))
         return !offsetAnimation.isIdle
     }
 
@@ -68,7 +74,14 @@ class AnimatedPlacementModifierNode(var lookaheadScope: LookaheadScope) :
         measurable: Measurable,
         constraints: Constraints,
     ): MeasureResult {
-        val placeable = measurable.measure(constraints)
+        val (animateWidth, animateHeight) =
+            sizeAnimation.updateTarget(
+                lookaheadSize,
+                coroutineScope,
+                tween(3_000)
+            )
+        val placeable = measurable.measure(Constraints.fixed(animateWidth, animateHeight))
+
         return layout(placeable.width, placeable.height) {
             val coordinates = coordinates
             if (coordinates != null) {
@@ -79,7 +92,8 @@ class AnimatedPlacementModifierNode(var lookaheadScope: LookaheadScope) :
                     }
 
                 // Uses the target offset to start an offset animation
-                val animatedOffset = offsetAnimation.updateTarget(target, coroutineScope)
+                val animatedOffset =
+                    offsetAnimation.updateTarget(target, coroutineScope, tween(3_000))
                 // Calculates the *current* offset within the given LookaheadScope
                 val placementOffset =
                     with(lookaheadScope) {

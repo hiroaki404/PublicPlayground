@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 
 // refer to
 // https://developer.android.com/reference/kotlin/androidx/compose/ui/layout/LookaheadScope
+// https://proandroiddev.com/animations-with-lookahead-in-jetpack-compose-60423fe0d1a7
 
 @Composable
 fun LookaheadScopeDemoScreen() {
@@ -48,7 +49,8 @@ fun LookaheadScopeDemoScreenContent(
                     Surface(
                         modifier = Modifier
                             .padding(8.dp)
-                            .size(50.dp)
+                            .size(if (isInColumn) 80.dp else 20.dp)
+//                            .size(50.dp)
                             .animatePlacement(this),
                         color = color
                     ) {}
