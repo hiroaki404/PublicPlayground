@@ -51,6 +51,7 @@ fun BirdGridScreen(
     onBirdClick: (Int) -> Unit = {},
     goToCameraSpec: () -> Unit = {},
     goToQuiz: () -> Unit = {},
+    goToLookaheadScopeUseLowLevelApiDemo: () -> Unit = {},
 ) {
     with(sharedTransitionScope) {
         Scaffold(
@@ -141,6 +142,9 @@ fun BirdGridScreen(
                 }
                 Button(onClick = goToQuiz) {
                     Text(stringResource(id = R.string.quiz_navigation_button))
+                }
+                Button(onClick = goToLookaheadScopeUseLowLevelApiDemo) {
+                    Text("Go to LookaheadScopeUseLowLevelApiDemo")
                 }
                 Text("AI generated images for the images.")
             }
