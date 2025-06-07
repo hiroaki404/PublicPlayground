@@ -21,7 +21,9 @@ import androidx.compose.ui.layout.LookaheadScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-// https://proandroiddev.com/animations-with-lookahead-in-jetpack-compose-60423fe0d1a7
+// refer to
+// https://developer.android.com/reference/kotlin/androidx/compose/ui/layout/LookaheadScope
+
 @Composable
 fun LookaheadScopeDemoScreen() {
     LookaheadScopeDemoScreenContent()
@@ -39,26 +41,27 @@ fun LookaheadScopeDemoScreenContent(
     )
 
     var isInColumn by remember { mutableStateOf(false) }
-    val items = remember {
-        movableContentOf {
-            colors.forEachIndexed { index, color ->
-                Surface(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(50.dp),
-                    color = color
-                ) {}
+    LookaheadScope {
+        val items = remember {
+            movableContentOf {
+                colors.forEachIndexed { index, color ->
+                    Surface(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .size(50.dp)
+                            .animatePlacement(this),
+                        color = color
+                    ) {}
+                }
             }
         }
-    }
 
-    Scaffold { innerPadding ->
-        Column(modifier = modifier.padding(innerPadding)) {
-            Button(onClick = { isInColumn = !isInColumn }) {
-                Text(text = "Toggle Layout")
-            }
-            Spacer(modifier = Modifier.size(16.dp))
-            LookaheadScope {
+        Scaffold { innerPadding ->
+            Column(modifier = modifier.padding(innerPadding)) {
+                Button(onClick = { isInColumn = !isInColumn }) {
+                    Text(text = "Toggle Layout")
+                }
+                Spacer(modifier = Modifier.size(16.dp))
                 if (isInColumn) {
                     Column {
                         items()
