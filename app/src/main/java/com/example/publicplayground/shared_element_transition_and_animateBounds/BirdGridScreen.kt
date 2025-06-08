@@ -52,6 +52,7 @@ fun BirdGridScreen(
     goToCameraSpec: () -> Unit = {},
     goToQuiz: () -> Unit = {},
     goToLookaheadScopeUseLowLevelApiDemo: () -> Unit = {},
+    goToGridAndListBird: () -> Unit = {},
 ) {
     with(sharedTransitionScope) {
         Scaffold(
@@ -145,6 +146,9 @@ fun BirdGridScreen(
                 }
                 Button(onClick = goToLookaheadScopeUseLowLevelApiDemo) {
                     Text("Go to LookaheadScopeUseLowLevelApiDemo")
+                }
+                Button(onClick = goToGridAndListBird) {
+                    Text("Go to GridAndListBirdScreen")
                 }
                 Text("AI generated images for the images.")
             }

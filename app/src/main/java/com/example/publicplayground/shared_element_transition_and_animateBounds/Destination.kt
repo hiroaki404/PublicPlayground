@@ -18,4 +18,7 @@ sealed class Destination {
 
     @Serializable
     object LookaheadScopeUseLowLevelApiDemo : Destination()
+
+    @Serializable
+    object GridAndListBird : Destination()
 }

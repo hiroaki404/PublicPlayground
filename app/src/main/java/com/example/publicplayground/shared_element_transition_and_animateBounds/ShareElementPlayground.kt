@@ -39,6 +39,9 @@ fun ShareElementPlayground(modifier: Modifier = Modifier) {
                     },
                     goToLookaheadScopeUseLowLevelApiDemo = {
                         navController.navigate(Destination.LookaheadScopeUseLowLevelApiDemo)
+                    },
+                    goToGridAndListBird = {
+                        navController.navigate(Destination.GridAndListBird)
                     }
                 )
             }
@@ -76,6 +79,10 @@ fun ShareElementPlayground(modifier: Modifier = Modifier) {
 
             composable<Destination.LookaheadScopeUseLowLevelApiDemo> {
                 LookaheadScopeUseLowLevelApiDemoScreen()
+            }
+
+            composable<Destination.GridAndListBird> {
+                GridAndListBirdScreen()
             }
         }
     }
