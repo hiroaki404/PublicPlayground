@@ -3,18 +3,13 @@ package com.example.publicplayground.shared_element_transition_and_animateBounds
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -35,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -106,16 +102,17 @@ fun GridAndListBirdScreenContent(
         }
     ) { innerPadding ->
         if (isGrid) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
+            val imageWidth = (LocalConfiguration.current.screenWidthDp - 48) / 2
+            FlowRow(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding),
-                contentPadding = PaddingValues(16.dp),
+                    .padding(innerPadding)
+                    .padding(top = 16.dp, start = 16.dp),
                 horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp),
-                verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp)
+                verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp),
+                maxItemsInEachRow = 2
             ) {
-                items(birds) { bird ->
+                birds.forEach { bird ->
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(bird.imageResId)
@@ -123,23 +120,26 @@ fun GridAndListBirdScreenContent(
                             .build(),
                         contentDescription = bird.name,
                         modifier = Modifier
-                            .fillMaxSize()
+                            .size(imageWidth.dp)
                             .aspectRatio(1f)
                             .clip(RoundedCornerShape(8.dp))
-                            .background(Color.Gray.copy(alpha = 0.2f))
                     )
                 }
             }
         } else {
-            LazyColumn(
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(innerPadding),
-                contentPadding = PaddingValues(16.dp),
+                    .padding(innerPadding)
+                    .padding(16.dp),
                 verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp)
             ) {
-                items(birds) { bird ->
-                    Row(modifier = Modifier.fillMaxWidth().background(Color.Gray.copy(alpha = 0.2f))) {
+                birds.forEach { bird ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.Gray.copy(alpha = 0.2f))
+                    ) {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
                                 .data(bird.imageResId)
