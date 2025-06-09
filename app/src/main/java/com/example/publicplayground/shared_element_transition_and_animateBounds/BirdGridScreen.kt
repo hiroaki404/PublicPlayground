@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -52,6 +53,7 @@ fun BirdGridScreen(
     goToCameraSpec: () -> Unit = {},
     goToQuiz: () -> Unit = {},
     goToLookaheadScopeUseLowLevelApiDemo: () -> Unit = {},
+    goToGridAndListBird: () -> Unit = {},
 ) {
     with(sharedTransitionScope) {
         Scaffold(
@@ -136,17 +138,38 @@ fun BirdGridScreen(
                             }
                         }
                     }
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Box {
+                            Button(onClick = goToCameraSpec) {
+                                Text(stringResource(R.string.camera_spec_button))
+                            }
+                        }
+                    }
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Box {
+                            Button(onClick = goToQuiz) {
+                                Text(stringResource(id = R.string.quiz_navigation_button))
+                            }
+                        }
+                    }
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Box {
+                            Button(onClick = goToLookaheadScopeUseLowLevelApiDemo) {
+                                Text("Go to LookaheadScopeUseLowLevelApiDemo")
+                            }
+                        }
+                    }
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Box {
+                            Button(onClick = goToGridAndListBird) {
+                                Text("Go to GridAndListBirdScreen")
+                            }
+                        }
+                    }
+                    item(span = { GridItemSpan(maxLineSpan) }) {
+                        Text("AI generated images for the images.")
+                    }
                 }
-                Button(onClick = goToCameraSpec) {
-                    Text(stringResource(R.string.camera_spec_button))
-                }
-                Button(onClick = goToQuiz) {
-                    Text(stringResource(id = R.string.quiz_navigation_button))
-                }
-                Button(onClick = goToLookaheadScopeUseLowLevelApiDemo) {
-                    Text("Go to LookaheadScopeUseLowLevelApiDemo")
-                }
-                Text("AI generated images for the images.")
             }
         }
     }

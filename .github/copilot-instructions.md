@@ -4,4 +4,5 @@
 - download_figma_imagesが失敗した場合は正しいJSON形式で画像のダウンロードを再度試みてください。
 - コミットするときは、すべての変更をgit addしてください。
 - テキストをUIに追加するときは、英語で書いてください。
-
+- ScreenというComposableを配置するときは、previewも追加してください。
+- previewを追加するときは、Themeでラップしてください
