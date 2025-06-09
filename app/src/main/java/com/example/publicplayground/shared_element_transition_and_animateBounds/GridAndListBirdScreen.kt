@@ -1,7 +1,11 @@
 package com.example.publicplayground.shared_element_transition_and_animateBounds
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.animateBounds
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -24,12 +28,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.movableContentWithReceiverOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.LookaheadScope
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -37,7 +43,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import coil3.request.crossfade
 import com.example.publicplayground.R
 import com.example.publicplayground.ui.theme.PublicPlaygroundTheme
 
@@ -53,7 +58,7 @@ fun GridAndListBirdScreen(modifier: Modifier = Modifier) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun GridAndListBirdScreenContent(
     isGrid: Boolean,
@@ -101,70 +106,72 @@ fun GridAndListBirdScreenContent(
             )
         }
     ) { innerPadding ->
-        if (isGrid) {
-            val imageWidth = (LocalConfiguration.current.screenWidthDp - 48) / 2
-            FlowRow(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(top = 16.dp, start = 16.dp),
-                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp),
-                verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp),
-                maxItemsInEachRow = 2
-            ) {
-                birds.forEach { bird ->
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(bird.imageResId)
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = bird.name,
-                        modifier = Modifier
-                            .size(imageWidth.dp)
-                            .aspectRatio(1f)
-                            .clip(RoundedCornerShape(8.dp))
-                    )
-                }
-            }
-        } else {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(16.dp),
-                verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp)
-            ) {
+        val items = remember {
+            movableContentWithReceiverOf<LookaheadScope, List<Bird>, Boolean> { birds, isGrid ->
+                val imageWidth = (LocalConfiguration.current.screenWidthDp - 48) / 2
                 birds.forEach { bird ->
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .background(Color.Gray.copy(alpha = 0.2f))
+                            .animateBounds(lookaheadScope = this@movableContentWithReceiverOf)
                     ) {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
                                 .data(bird.imageResId)
-                                .crossfade(true)
                                 .build(),
                             contentDescription = bird.name,
                             modifier = Modifier
-                                .size(128.dp)
+                                .size(if (isGrid) imageWidth.dp else 128.dp)
                                 .aspectRatio(1f)
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(Color.Gray.copy(alpha = 0.2f))
                         )
-                        Column(modifier = Modifier.padding(8.dp)) {
-                            Text(
-                                text = bird.id.toString(),
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.padding(start = 8.dp)
-                            )
-                            Text(
-                                text = bird.name,
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.padding(start = 8.dp)
-                            )
+                        AnimatedVisibility(!isGrid) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp)
+                            ) {
+                                Text(
+                                    text = bird.id.toString(),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.padding(start = 8.dp)
+                                )
+                                Text(
+                                    text = bird.name,
+                                    style = MaterialTheme.typography.titleMedium,
+                                    modifier = Modifier.padding(start = 8.dp)
+                                )
+                            }
                         }
                     }
+                }
+            }
+        }
+
+        LookaheadScope {
+            if (isGrid) {
+                FlowRow(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(top = 16.dp, start = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        16.dp
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    maxItemsInEachRow = 2
+                ) {
+                    items(birds, isGrid)
+                }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    items(birds, isGrid)
                 }
             }
         }
