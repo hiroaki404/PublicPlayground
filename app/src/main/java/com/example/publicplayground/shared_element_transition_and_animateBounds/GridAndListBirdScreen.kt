@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.animateBounds
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
@@ -121,10 +120,12 @@ fun GridAndListBirdScreenContent(
                             modifier = Modifier
                                 .size(if (isGrid) imageWidth.dp else 128.dp)
                                 .aspectRatio(1f)
+                                .animateBounds(lookaheadScope = this@movableContentWithReceiverOf)
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(Color.Gray.copy(alpha = 0.2f))
                         )
-                        AnimatedVisibility(!isGrid) {
+                        AnimatedVisibility(
+                            !isGrid,
+                        ) {
                             Column(
                                 modifier = Modifier
                                     .padding(8.dp)
@@ -132,12 +133,14 @@ fun GridAndListBirdScreenContent(
                                 Text(
                                     text = bird.id.toString(),
                                     style = MaterialTheme.typography.bodyMedium,
-                                    modifier = Modifier.padding(start = 8.dp)
+                                    modifier = Modifier.padding(start = 8.dp),
+                                    maxLines = 1
                                 )
                                 Text(
                                     text = bird.name,
                                     style = MaterialTheme.typography.titleMedium,
-                                    modifier = Modifier.padding(start = 8.dp)
+                                    modifier = Modifier.padding(start = 8.dp),
+                                    maxLines = 1
                                 )
                             }
                         }
