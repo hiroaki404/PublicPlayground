@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -119,7 +118,6 @@ fun GridAndListBirdScreenContent(
                             contentDescription = bird.name,
                             modifier = Modifier
                                 .size(if (isGrid) imageWidth.dp else 128.dp)
-                                .aspectRatio(1f)
                                 .animateBounds(lookaheadScope = this@movableContentWithReceiverOf)
                                 .clip(RoundedCornerShape(8.dp))
                         )
@@ -129,19 +127,17 @@ fun GridAndListBirdScreenContent(
                             Column(
                                 modifier = Modifier
                                     .padding(8.dp)
-                                    .animateBounds(lookaheadScope = this@movableContentWithReceiverOf),
+                                    .animateBounds(lookaheadScope = this@movableContentWithReceiverOf)
                             ) {
                                 Text(
                                     text = bird.id.toString(),
                                     style = MaterialTheme.typography.bodyMedium,
                                     modifier = Modifier.padding(start = 8.dp),
-                                    maxLines = 1
                                 )
                                 Text(
                                     text = bird.name,
                                     style = MaterialTheme.typography.titleMedium,
                                     modifier = Modifier.padding(start = 8.dp),
-                                    maxLines = 1
                                 )
                             }
                         }
