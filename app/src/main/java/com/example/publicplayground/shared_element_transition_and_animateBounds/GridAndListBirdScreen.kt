@@ -129,6 +129,7 @@ fun GridAndListBirdScreenContent(
                             Column(
                                 modifier = Modifier
                                     .padding(8.dp)
+                                    .animateBounds(lookaheadScope = this@movableContentWithReceiverOf),
                             ) {
                                 Text(
                                     text = bird.id.toString(),
