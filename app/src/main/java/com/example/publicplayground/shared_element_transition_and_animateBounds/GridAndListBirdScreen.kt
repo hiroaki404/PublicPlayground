@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -107,7 +106,7 @@ fun GridAndListBirdScreenContent(
         }
     ) { innerPadding ->
         val items = remember {
-            movableContentWithReceiverOf<LookaheadScope, List<Bird>, Boolean> { birds, isGrid ->
+            movableContentWithReceiverOf<LookaheadScope, Boolean> { isGrid ->
                 val imageWidth = (LocalConfiguration.current.screenWidthDp - 48) / 2
                 birds.forEach { bird ->
                     Row(
@@ -128,7 +127,6 @@ fun GridAndListBirdScreenContent(
                         AnimatedVisibility(!isGrid) {
                             Column(
                                 modifier = Modifier
-                                    .fillMaxWidth()
                                     .padding(8.dp)
                             ) {
                                 Text(
@@ -161,7 +159,7 @@ fun GridAndListBirdScreenContent(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     maxItemsInEachRow = 2
                 ) {
-                    items(birds, isGrid)
+                    items(isGrid)
                 }
             } else {
                 Column(
@@ -171,7 +169,7 @@ fun GridAndListBirdScreenContent(
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    items(birds, isGrid)
+                    items(isGrid)
                 }
             }
         }
