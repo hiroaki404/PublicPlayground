@@ -40,8 +40,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
+import com.example.core.ui.theme.PublicPlaygroundTheme
 import com.example.publicplayground.R
-import com.example.publicplayground.ui.theme.PublicPlaygroundTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -2,16 +2,13 @@ plugins {
     alias(libs.plugins.publicplayground.android.application)
     alias(libs.plugins.publicplayground.android.compose)
     alias(libs.plugins.publicplayground.android.kotlin)
-    alias(libs.plugins.kotlin.serialization)
 }
 
-android.namespace = "com.example.publicplayground"
+android.namespace = "com.example.circuitapp"
 
 dependencies {
-    implementation(projects.feature.animation)
-    implementation(projects.feature.composeBasic)
-    implementation(projects.feature.workManager)
     implementation(projects.core.ui)
+    implementation(projects.feature.birdApp)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -21,27 +18,11 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.animation)
     testImplementation(libs.junit)
-    testImplementation(libs.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    // workManager
-    implementation(libs.workManager)
-
-    implementation(libs.coil3)
-    implementation(libs.okio)
-
-    // maven github package or local
-//    implementation("sample:shared-android:1.0")
-
-    implementation(libs.androidx.navigation.compose)
-
-    // Kotlin Serialization
-    implementation(libs.kotlinx.serialization.json)
 }
