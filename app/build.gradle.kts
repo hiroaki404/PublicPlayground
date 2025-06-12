@@ -11,6 +11,7 @@ dependencies {
     implementation(projects.feature.animation)
     implementation(projects.feature.composeBasic)
     implementation(projects.feature.workManager)
+    implementation(projects.core.ui)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
