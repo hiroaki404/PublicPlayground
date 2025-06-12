@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.core.ui.theme.PublicPlaygroundTheme
+import com.example.feature.bird_app.BirdAppSample
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,10 +21,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             PublicPlaygroundTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    BirdAppSample(modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding))
                 }
             }
         }

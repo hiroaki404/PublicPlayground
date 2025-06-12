@@ -8,6 +8,8 @@ android.namespace = "com.example.circuitapp"
 
 dependencies {
     implementation(projects.core.ui)
+    implementation(projects.feature.birdApp)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
